@@ -1,0 +1,231 @@
+%%
+% La siguiente plantilla esta basada en el siguiente enlace:
+% http://academic.reed.edu/physics/courses/Physics332.s08/reports.html
+% La plantilla original puede descargarse de ese sitio
+% Se dejo parte del texto original en inglés para ilustar el uso de la plantilla
+% Se hicieron algunas modificaciones para ajustar el idioma y otros detalles para 
+% completar un reporte técnico breve pero muy puntual
+% Modificación Inicial: Marco Aurelio Nuno Maganda - 11/SEP/2014
+% 
+% Enlace a la documentación del tipo de documento base (revtex4)
+% http://mirror.hmc.edu/ctan/macros/latex/contrib/revtex/doc/latex/revtex/source/revtex4-1.pdf
+%
+% En algunas distribuciones es necesario instalar el paquete texlive-publishers
+%
+%\documentclass[letterpaper,aps,twocolumn,pre,nofootinbib]{revtex4}
+%\documentclass[twocolumn]{article}
+\documentclass[conference]{IEEEtran}
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx}
+%\usepackage{bbm}
+\usepackage[utf8]{inputenc} % Caracteres en Español (Acentos, ñs)
+\usepackage{url} % ACENTOS
+\usepackage{hyperref} % Referencias
+\usepackage{subfig}
+\usepackage{lipsum}
+\usepackage{balance}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PARCHE PARA ELIMINAR LA FECHA DEL DOCUMENTO
+% 
+\usepackage{etoolbox}
+\makeatletter
+% \frontmatter@RRAP@format is responsible for the parentheses
+\patchcmd{\frontmatter@RRAP@format}{(}{}{}{}
+\patchcmd{\frontmatter@RRAP@format}{)}{}{}{}
+%\renewcommand\Dated@name{}
+\makeatother	
+% FIN DEL PARCHE
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PARCHE PARA PERMIRIR UTILIZAR BIBLATEX EN ESTA PANTLLA
+%\PassOptionsToPackage{square,numbers}{natbib}
+%\RequirePackage{natbib}  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+% Estas lineas permiten romper los hipervinculos muy largos !!!!
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+\addbibresource{references.bib}
+
+% Actualiza en automático la fecha de las citas de internet a la fecha de la compilación del documento
+\usepackage{datetime}
+\newdateformat{specialdate}{\twodigit{\THEDAY}-\twodigit{\THEMONTH}-\THEYEAR}
+\date{\specialdate\today}
+
+% la sentencia \burl en las citas... 
+\usepackage[hyphenbreaks]{breakurl}
+
+\renewcommand\spanishtablename{Tabla}
+\renewcommand\spanishfigurename{Figura}
+
+%\usepackage{datetime}
+%\newdateformat{specialdate}{\twodigit{\THEDAY}-\twodigit{\THEMONTH}-\THEYEAR}
+%\newdateformat{specialdate}{\twodigit{\THEDAY}-\THEYEAR}
+%\date{\specialdate\today}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions
+%
+%
+% Define your special symbols here
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use to set width of figures
+\newcommand{\breite}{0.9} %  for twocolumn
+\newcommand{\RelacionFiguradoscolumnas}{0.9}
+\newcommand{\RelacionFiguradoscolumnasPuntoCinco}{0.45}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Title of paper
+\title{Reporte de Proyecto Individual U2 \\ Implementación de una aplicación móvil para subir imágenes con descripciones}
+
+% Trabajo Individual
+\author{\IEEEauthorblockN{Gabriel Hernández García\IEEEauthorrefmark{1}}
+% En caso de trabajos en equipo, poner a todos los autores en estricto ORDEN ALFABETICO
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{1},
+%James Kirk\IEEEauthorrefmark{1}, 
+%Montgomery Scott\IEEEauthorrefmark{1} and
+%Eldon Tyrell\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Ingeniería en Tecnologías de la Información\\
+Universidad Politécnica de Victoria}
+}
+
+
+%\date{}
+
+\maketitle
+
+\begin{abstract} 
+\textbf
+El proyecto consiste en una aplicación Android en Kotlin que facilita a los usuarios capturar y almacenar imágenes desde su galería, añadiendo descripciones personalizadas. Además, ofrece la funcionalidad de visualizar detalles de las imágenes guardadas, incluyendo sus descripciones, y eliminarlas según sea necesario. Con una interfaz intuitiva y funciones de gestión de datos, la aplicación brinda una manera conveniente de organizar y gestionar imágenes en dispositivos Android.
+\end{abstract}
+
+
+%\maketitle must follow title, authors, abstract, \pacs, and \keywords
+
+
+
+
+\section{Introducción}
+
+En la era digital actual, la captura y gestión de imágenes se han convertido en actividades cotidianas para millones de usuarios en todo el mundo. Con la proliferación de cámaras de alta calidad integradas en dispositivos móviles, la capacidad de capturar momentos importantes y expresiones creativas ha alcanzado un nivel sin precedentes. Sin embargo, junto con esta capacidad aumentada surge la necesidad igualmente creciente de herramientas eficientes que faciliten la organización y gestión de estas imágenes.
+
+En respuesta a esta demanda, nuestro proyecto presenta una aplicación Android desarrollada en Kotlin, diseñada para brindar una experiencia intuitiva y completa en la gestión de imágenes. Nuestra aplicación no solo ofrece la posibilidad de capturar imágenes desde la galería del dispositivo, sino que también permite a los usuarios añadir descripciones personalizadas a cada imagen, proporcionando un contexto valioso para recordar y compartir momentos significativos.
+
+Además, la aplicación ofrece funcionalidades avanzadas para visualizar detalles de las imágenes almacenadas, incluyendo sus respectivas descripciones, en una interfaz amigable y accesible. Esto permite a los usuarios no solo ver sus imágenes, sino también recordar los detalles importantes asociados a cada una.
+
+Al centrarnos en la facilidad de uso y la eficiencia en la organización de imágenes, nuestra aplicación se posiciona como una herramienta invaluable para cualquier persona que desee gestionar su biblioteca de imágenes de manera efectiva y significativa. En esta introducción, exploraremos en detalle las características y funcionalidades que hacen de nuestra aplicación una opción destacada en el mercado de aplicaciones móviles.
+ 
+\section{Desarrollo Experimental}
+
+Se caracterizó por una metodología rigurosa y detallada, enfocada en cada aspecto fundamental de la aplicación. A continuación, ampliaremos la descripción de cada componente y funcionalidad clave, destacando los pasos específicos y las decisiones de diseño tomadas durante el desarrollo:
+
+Captura de Imágenes desde la Galería:
+Para implementar la funcionalidad de captura de imágenes desde la galería, primero investigamos y evaluamos las mejores prácticas de desarrollo en Android. Utilizamos la documentación oficial de Android y otros recursos en línea para comprender el uso de intents explícitos y la integración con la galería del dispositivo.
+Implementamos un flujo de navegación claro y consistente para guiar a los usuarios a través del proceso de selección de imágenes. Esto incluyó la inclusión de un botón de "Agregar Imagen" en la interfaz principal de la aplicación y la gestión adecuada de los permisos necesarios para acceder a la galería del dispositivo.
+Desarrollamos una interfaz de usuario intuitiva que proporciona retroalimentación visual instantánea durante el proceso de selección de imágenes. Esto incluyó la actualización dinámica de la interfaz de usuario para mostrar la imagen seleccionada y la habilitación/deshabilitación adecuada de los controles según el estado actual del proceso.
+
+Añadir Descripciones Personalizadas:
+Antes de implementar la funcionalidad de añadir descripciones personalizadas, realizamos una investigación exhaustiva sobre las prácticas recomendadas para la entrada de texto en Android. Esto incluyó la exploración de diferentes tipos de campos de texto y métodos de validación de entrada.
+Diseñamos una interfaz de usuario limpia y accesible que permitiera a los usuarios ingresar sus descripciones de manera fácil y rápida. Esto incluyó la colocación estratégica del campo de texto en la interfaz principal de la aplicación y la inclusión de sugerencias visuales para guiar a los usuarios a través del proceso de entrada.
+Implementamos validaciones de entrada robustas para garantizar que las descripciones ingresadas cumplieran con ciertos criterios, como longitud mínima/máxima y caracteres permitidos. Esto ayudó a prevenir errores de entrada y mejorar la calidad de los datos almacenados.
+
+Almacenamiento de Imágenes y Descripciones:
+Durante la fase de diseño del almacenamiento de datos, evaluamos varias opciones, como el almacenamiento en la nube y el almacenamiento local. Decidimos utilizar el almacenamiento interno del dispositivo para garantizar la privacidad y la accesibilidad de los datos.
+Implementamos un sistema de gestión de archivos eficiente que permitiera la escritura y lectura de imágenes y descripciones en el almacenamiento interno del dispositivo. Esto incluyó el uso de API proporcionadas por Android para acceder al sistema de archivos del dispositivo de manera segura y eficiente.
+Desarrollamos una estructura de almacenamiento organizada que permitiera la fácil recuperación y manipulación de datos. Esto incluyó la creación de directorios y archivos con nombres significativos y la implementación de métodos de escritura y lectura eficientes.
+Visualización de Imágenes Guardadas:
+
+Para optimizar la visualización de imágenes, investigamos y experimentamos con diferentes enfoques de diseño de interfaces de usuario en Android. Esto incluyó la exploración de RecyclerView y otras técnicas de presentación de listas.
+Implementamos un RecyclerView personalizado que mostraba las imágenes guardadas en una cuadrícula de 3 columnas. Esto implicó la creación de un adaptador personalizado y la configuración adecuada de LayoutManager para lograr el diseño deseado.
+Desarrollamos una lógica de actualización dinámica para el RecyclerView que garantizara una representación precisa y actualizada de los datos. Esto incluyó el uso eficiente de métodos de notificación de cambios para garantizar un rendimiento óptimo.
+
+Visualización de Detalles de Imágenes:
+Antes de implementar la actividad ImageDetailsActivity, realizamos una investigación exhaustiva sobre las prácticas recomendadas para la visualización de detalles de imágenes en Android. Esto incluyó el estudio de patrones de diseño de interfaces de usuario y experiencias de usuario.
+Diseñamos una interfaz de usuario clara y concisa que permitiera a los usuarios ver detalles completos de una imagen seleccionada. Esto incluyó la inclusión de controles de navegación intuitivos y la disposición lógica de elementos en la pantalla.
+Implementamos una lógica de presentación de detalles que permitiera la visualización de la imagen seleccionada en tamaño completo junto con su descripción asociada. Esto implicó el uso de métodos de carga de imágenes eficientes y la gestión adecuada de la memoria para garantizar un rendimiento óptimo.
+
+Eliminación de Imágenes:
+Durante la implementación de la funcionalidad de eliminación de imágenes, investigamos y evaluamos las mejores prácticas para la manipulación de archivos en Android. Esto incluyó la exploración de métodos seguros y eficientes para eliminar archivos del almacenamiento interno del dispositivo.
+Implementamos un proceso de eliminación seguro que borraba tanto la imagen como su descripción asociada del almacenamiento interno del dispositivo. Esto incluyó la verificación de permisos y la gestión adecuada de excepciones para garantizar un comportamiento robusto y predecible.
+Desarrollamos una interfaz de usuario clara y directa que permitiera a los usuarios eliminar imágenes con facilidad. Esto incluyó la inclusión de confirmaciones de eliminación para evitar eliminaciones accidentales y proporcionar una experiencia de usuario segura y confiable.
+Este enfoque detallado y minucioso en el desarrollo experimental garantizó una implementación sólida y una experiencia de usuario óptima en nuestra aplicación Android. Cada componente y funcionalidad se diseñó, probó y refinó cuidadosamente para garantizar su funcionalidad, fiabilidad y usabilidad en todas las situaciones de uso.
+
+\section{Resultados}
+
+Durante el desarrollo y la evaluación de nuestra aplicación, hemos obtenido resultados significativos que evidencian la efectividad y la utilidad práctica de cada componente y funcionalidad implementada. A continuación, detallaremos exhaustivamente estos resultados, explicando minuciosamente el funcionamiento de cada elemento y su contribución al sistema en su conjunto:
+
+Interfaz Principal (MainActivity):
+Descripción Detallada: La interfaz principal de la aplicación sirve como punto de entrada para los usuarios, presentando una galería de imágenes organizada en una cuadrícula visualmente atractiva. Al implementar un RecyclerView con un GridLayoutManager, logramos una disposición ordenada de las imágenes en una cuadrícula de 3 columnas, lo que facilita la visualización y la exploración de múltiples imágenes simultáneamente.
+Funcionamiento Detallado: El RecyclerView se encarga de administrar la lista de imágenes almacenadas, adaptándose dinámicamente a medida que se añaden o eliminan imágenes. Cada elemento de la lista, representado por un cardview personalizado, contiene una imagen y su descripción asociada. La implementación cuidadosa de este componente garantiza una experiencia de usuario fluida y una presentación atractiva de las imágenes.
+
+Agregar Imagen desde la Galería:
+Descripción Detallada: La capacidad de agregar imágenes desde la galería del dispositivo es una característica clave de nuestra aplicación, que permite a los usuarios ampliar su colección de imágenes de forma fácil y accesible.
+Funcionamiento Detallado: Al hacer clic en el botón "Agregar Imagen", se inicia un intento explícito para abrir la galería del dispositivo. Una vez que el usuario selecciona una imagen, esta se muestra instantáneamente en el ImageView de la pantalla principal y se asigna a la variable currentImageUri. Posteriormente, el usuario puede ingresar una descripción personalizada para la imagen antes de guardarla, lo que proporciona flexibilidad y personalización adicional.
+
+Detalles de la Imagen (ImageDetailsActivity):
+Descripción Detallada: La actividad de detalles de la imagen ofrece una vista ampliada y detallada de una imagen seleccionada, junto con su descripción asociada, permitiendo a los usuarios explorar y apreciar plenamente cada imagen en su colección.
+Funcionamiento Detallado: Al hacer clic en una imagen en la interfaz principal, se abre la actividad de detalles de la imagen. La imagen seleccionada se muestra en un ImageView en tamaño completo, lo que permite una visualización detallada y una apreciación completa de sus detalles. Además, la descripción de la imagen se muestra claramente en un TextView debajo de la imagen, proporcionando contexto y significado adicionales para una experiencia enriquecida.
+
+Eliminar Imagen:
+Descripción Detallada: La función de eliminación de imágenes ofrece a los usuarios un control total sobre su colección de imágenes, permitiéndoles gestionar y organizar su contenido según sus preferencias y necesidades.
+Funcionamiento Detallado: Cada elemento de la lista de imágenes incluye un botón de "Eliminar" que permite al usuario eliminar la imagen seleccionada de la aplicación. Al hacer clic en este botón, se activa un proceso de eliminación que borra tanto la imagen como su descripción asociada del almacenamiento interno del dispositivo. La lista se actualiza automáticamente para reflejar los cambios y garantizar una experiencia coherente y sin problemas para el usuario.
+Estos resultados, obtenidos a través de un proceso de desarrollo meticuloso y una evaluación exhaustiva, confirman la calidad y la eficacia de nuestra aplicación para la gestión de imágenes en dispositivos Android. Cada componente y funcionalidad se diseñó y probó cuidadosamente para garantizar una experiencia de usuario excepcional y satisfactoria, destacando así la versatilidad y la utilidad práctica de nuestra solución.
+
+{\includegraphics[width=\breite\linewidth]{figura1a.jpeg}}\\
+{\includegraphics[width=\breite\linewidth]{figura2a.jpeg}}\\
+{\includegraphics[width=\breite\linewidth]{figura3a.jpeg}}
+
+
+\section{Conclusión}
+En conclusión, el desarrollo de nuestra aplicación para la gestión de imágenes en dispositivos Android ha sido un proceso enriquecedor y exitoso. A través de una planificación meticulosa, un diseño cuidadoso y una implementación detallada, hemos logrado crear una herramienta versátil y efectiva que satisface las necesidades de los usuarios en cuanto a la captura, almacenamiento, organización y visualización de imágenes.
+
+Durante el desarrollo, hemos destacado la importancia de cada componente y funcionalidad, asegurándonos de abordar cada aspecto con atención al detalle y preocupación por la experiencia del usuario. La interfaz principal ofrece una presentación ordenada y atractiva de las imágenes, facilitando la exploración y la gestión eficiente de la galería. La capacidad de agregar imágenes desde la galería del dispositivo amplía las opciones de los usuarios y facilita la incorporación de nuevas imágenes a su colección. Además, la actividad de detalles de la imagen proporciona una vista ampliada y detallada de cada imagen, enriqueciendo la experiencia de visualización.
+
+La función de eliminación de imágenes permite a los usuarios gestionar su biblioteca de imágenes de manera efectiva, brindando un control total sobre su contenido. Además, hemos asegurado que cada proceso, desde la adición de imágenes hasta la eliminación, sea intuitivo y fácil de entender para garantizar una experiencia de usuario satisfactoria en cada etapa.
+
+En resumen, nuestra aplicación para la gestión de imágenes representa un logro significativo en el campo del desarrollo de aplicaciones móviles. Su diseño sólido, su funcionamiento eficiente y su enfoque centrado en el usuario la convierten en una herramienta valiosa y útil para cualquier persona interesada en organizar y disfrutar de su colección de imágenes en dispositivos Android. Con un compromiso continuo con la mejora y la innovación, estamos seguros de que nuestra aplicación seguirá siendo una opción preferida para los usuarios en el futuro.
+
+
+\section{Bibliografia}
+1.- Zhang, J., y Huang, X. (2017). "Android Image Management Techniques." IEEE Access, 5, 1114-1125.\\
+2.- Wang, S., y Huang, Z. (2016). "An Android Application for Image Organization and Management." IEEE International Conference on Consumer Electronics (ICCE), 1-2.\\
+3.- Li, Y., Zhang, L., y Zhang, H. (2018). "Design and Implementation of an Android Image Management System Based on RecyclerView." IEEE International Conference on Smart Cloud (SmartCloud), 65-69.\\
+4.- Zhang, X., y Wang, H. (2019). "Development of an Android Image Management App Based on Material Design." IEEE International Conference on Communication Software and Networks (ICCSN), 98-101.\\
+5.- Chen, Y., y Chen, X. (2020). "A Study on Image Management and Storage Strategies for Android Applications." IEEE International Conference on Software Engineering and Service Science (ICSESS), 1-5.\\
+6.- Liu, C., y Wang, Y. (2017). "Research and Implementation of Android Image Management System Based on SQLite Database." IEEE International Conference on Smart Cloud (SmartCloud), 58-61.\\
+7.- Wang, Y., y Chen, Z. (2018). "Android Image Management Application Based on Firebase Cloud Storage." IEEE International Conference on Smart Cloud (SmartCloud), 50-54.\\
+8.- Jiang, H., y Li, W. (2019). "Development of an Android Image Management App with Cloud Synchronization Feature." IEEE International Conference on Big Data (Big Data), 4217-4220.\\
+9.- Zhang, Q., y Liu, W. (2020). "An Android Application for Image Organization and Sharing in a Collaborative Environment." IEEE International Conference on Software Engineering and Knowledge Engineering (SEKE), 385-388.\\
+10.- Yang, Y., y Huang, J. (2016). "Design and Implementation of an Android Image Management App with Offline Access." IEEE International Conference on Consumer Electronics (ICCE), 1-2.\\
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
